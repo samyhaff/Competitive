@@ -1,39 +1,11 @@
 #include <bits/stdc++.h>
+#include "linked_lists.h"
 
 using namespace std;
 
-struct node {
-    int val;
-    node *next;
-};
-
-int get_length(node *head) {
-    int length = 0;
-    node *current = head;
-    while (current) {
-        length++;
-        current = current->next;
-    }
-    return length;
-}
-
-int find_element(node *head, int k) {
-    node *current = head;
-    int idx = 0;
-    while (idx++ < k) current = current->next;
-    return current->val;
-}
-
 int find_from_last(node *head, int k) {
     int length = get_length(head);
-    return find_element(head, length - k - 1);
-}
-
-node *insert(node *head, int val) {
-    node *new_head = new node;
-    new_head->next = head;
-    new_head->val = val;
-    return new_head;
+    return find(head, length - k - 1);
 }
 
 int main() {
