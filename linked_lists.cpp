@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <unordered_set>
 #include "linked_lists.h"
 
@@ -48,9 +49,33 @@ int get_length(node *head) {
     return length;
 }
 
+int get_max(node *head) {
+    if (!head->next) return head->val;
+    return max(head->val, get_max(head->next));
+}
+
+int get_min(node *head) {
+    if (!head->next) return head->val;
+    return min(head->val, get_min(head->next));
+}
+
 int find(node *head, int k) {
     node *current = head;
     int idx = 0;
     while (idx++ < k) current = current->next;
     return current->val;
+}
+
+node *partition(node *head, int x) {
+    node *current = head;
+
+    while (current) {
+        if (current->next && current->next->val < x) {
+            head = insert(head, current->next->val);
+            current->next = current->next->next;
+        }
+        current = current->next;
+    }
+
+    return head;
 }
