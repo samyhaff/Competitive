@@ -79,3 +79,11 @@ node *partition(node *head, int x) {
 
     return head;
 }
+
+node *reverse(node *head) {
+    if (!head || !head->next) return head;
+    node *rest = reverse(head->next);
+    head->next->next = head;
+    head->next = NULL;
+    return rest;
+}

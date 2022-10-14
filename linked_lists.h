@@ -12,3 +12,4 @@ int get_length(node *);
 int find(node *, int);
 int get_max(node *);
 node *partition(node *, int);
+node *reverse(node *);
