@@ -7,8 +7,47 @@ struct node {
     node *next;
 };
 
-void merge_sort(node *head) {
+int get_length(node *head){
+	node* curr = head;
+	int i = 0;
+    while (curr) {
+        curr = curr->next;
+        i++;
+    }
+	return i;
+}
 
+node* merge(node *&head1,node *&head2){
+	node* new_head;
+	if (!head1) return head2;
+	else if (!head2) return head1;
+
+	if (head1->val < head2->val){
+		new_head = head1;
+		new_head->next = merge(head1->next, head2);
+	} else {
+		new_head = head2;
+		new_head->next = merge(head1, head2->next);
+	}
+
+	return new_head;
+}
+
+void merge_sort(node *&head){
+	if(!head->next) {
+		node* head1;
+		node* head2 = head;
+		int len = get_length(head);
+		for(int i = 0; i < len / 2; i++) {
+			head1 = head2;
+			head2 = head2->next;
+		}
+		head1->next = NULL;
+		head1 = head;
+		merge_sort(head1);
+		merge_sort(head2);
+		head = merge(head1,head2);
+	}
 }
 
 void merge(vector<int> &v, int l, int m, int r) {
