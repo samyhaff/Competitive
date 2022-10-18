@@ -4,7 +4,7 @@ using namespace std;
 
 #define LIMIT 45000
 
-void dfs(vector<int> *graph, int *distance, bool *visited, queue<int> queue, int s, int t) {
+int dfs(vector<int> *graph, int n, int *distance, bool *visited, queue<int> queue, int s, int t) {
     visited[s] = true;
     distance[s] = 0;
     queue.push(s);
@@ -14,12 +14,16 @@ void dfs(vector<int> *graph, int *distance, bool *visited, queue<int> queue, int
         queue.pop();
 
         for (auto y: graph[x]) {
+            if (y == t) return distance[x] + 1;
+            // if (distance[x] >= n / 2) return n / 2;
             if (visited[y]) continue;
             visited[y] = true;
             distance[y] = distance[x] + 1;
             queue.push(y);
         }
     }
+
+    return -1;
 }
 
 int main() {
@@ -35,18 +39,21 @@ int main() {
 
     queue<int> queue;
     bool *visited = new bool[n];
-    int *distance = new int[n*n];
+    int *distance = new int[n];
 
-    for (int i = 0; i < n; i++) visited[i] = false;
-    for (int i = 0; i < n*n; i++) distance[i] = 0;
+    for (int i = 0; i < n; i++) {
+        visited[i] = false;
+        distance[i] = 0;
+    }
 
     cin >> q;
     for (int i = 0; i < q; i++) {
         cin >> u >> v;
-        for (int i = 0; i < n; i++) visited[i] = false;
-        if (distance[n * min(u, v) + max(u, v)] == 0)
-            dfs(graph, distance + n * min(u, v), visited, queue, min(u, v), max(u, v));
-        res = distance[n * min(u, v) + max(u, v)] == 0 ? -1 : distance[n * min(u, v) + max(u, v)];
+        for (int i = 0; i < n; i++) {
+            visited[i] = false;
+            distance[i] = 0;
+        }
+        res = dfs(graph, n, distance, visited, queue, u, v);
         cout << res << endl;
     }
 

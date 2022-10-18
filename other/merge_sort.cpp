@@ -2,6 +2,15 @@
 
 using namespace std;
 
+struct node {
+    int val;
+    node *next;
+};
+
+void merge_sort(node *head) {
+
+}
+
 void merge(vector<int> &v, int l, int m, int r) {
     vector<int> tmp;
     int i, j;
